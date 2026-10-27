@@ -35,7 +35,27 @@ if (binding_addr == -1){
 }
 
 
-printf("Socket bound successfully to 127.0.0.1:8080\n");
+//listening....
+if (listen(server_fd, 5) == -1){
+    perror("listening failed!!");
+    close(server_fd);
+    return 1;
+}
+
+//accept...
+int client_fd = accept(server_fd, NULL, NULL);
+
+if (client_fd == -1){
+    perror("connection failed !");
+    close(server_fd);
+    close(client_fd);
+    return 1;
+}
+
+
+printf("server is listening on port 8080\n");
+
+
 close(server_fd); 
 return 0;
 }
